@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CurrencyService {
-    double getExchangeRate(String fromCurrency, String toCurrency, double value);
+    double getExchangeRate(LocalDate date, String fromCurrency, String toCurrency, double value);
     CurrencyDto createCurrency(CurrencyDto currencyDto);
 }

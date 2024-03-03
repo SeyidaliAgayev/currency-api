@@ -9,7 +9,6 @@ import java.time.LocalDate;
 @Getter
 @Builder
 public class ExchangeRateDto {
-    private LocalDate date;
     private String fromCurrency;
     private String toCurrency;
     private double rate;

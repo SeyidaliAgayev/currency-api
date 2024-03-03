@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,16 +23,19 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Autowired
     ExchangeRateRepository exchangeRateRepository;
     @Override
-    public double getExchangeRate(String fromCurrency, String toCurrency, double value) {
-        Optional<ExchangeRateEntity> optionalExchangeRate = exchangeRateRepository.findByFromCurrencyAndToCurrency(fromCurrency, toCurrency);
+    public double getExchangeRate(LocalDate date, String fromCurrency, String toCurrency, double value) {
+        Optional<CurrencyEntity> fromCurrencyCode = currencyRepository.findByCode(fromCurrency);
+        Optional<CurrencyEntity> toCurrencyCode = currencyRepository.findByCode(toCurrency);
 
+        if (fromCurrencyCode.isPresent() & toCurrencyCode.isPresent()) {
+            CurrencyEntity currencyEntityFrom = fromCurrencyCode.get();
+            CurrencyEntity currencyEntityTo = toCurrencyCode.get();
 
-        if (optionalExchangeRate.isPresent()) {
-            ExchangeRateEntity exchangeRateEntity = optionalExchangeRate.get();
-            return exchangeRateEntity.getRate() * value;
+            return (currencyEntityFrom.getRate() / currencyEntityTo.getRate()) * value;
         } else {
             throw new ExchangeRateNotFoundException("Exchange rate not found for the specified criteria!");
         }
+
     }
 
 
@@ -41,9 +44,16 @@ public class CurrencyServiceImpl implements CurrencyService {
     public CurrencyDto createCurrency(CurrencyDto currencyDto) {
         CurrencyEntity currencyEntity = CurrencyEntity.builder().code(currencyDto.getCode())
                 .name(currencyDto.getName())
-                .rate(currencyDto.getRate()).build();
+                .rate(currencyDto.getRate())
+                .build();
         currencyRepository.save(currencyEntity);
-        return null;
+
+
+        return CurrencyDto.builder()
+                .code(currencyEntity.getCode())
+                .name(currencyEntity.getName())
+                .rate(currencyEntity.getRate())
+                .build();
     }
 
 }
