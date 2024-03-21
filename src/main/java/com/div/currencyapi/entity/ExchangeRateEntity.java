@@ -18,11 +18,8 @@ public class ExchangeRateEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "source_currency_code")
-    private String fromCurrency;
-
     @Column(name = "target_currency_code")
-    private String toCurrency;
+    private String currency;
 
     @Column(name = "exchange_rate")
     private double rate;

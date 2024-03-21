@@ -1,6 +1,5 @@
 
 
-User
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,7 +90,7 @@ User
         const exchangeCurrency = document.getElementById('exchangeCurrency').value;
         const value = document.getElementById('value').value;
 
-        const apiUrl = `http://localhost:9090/api/v1/currency?date=${date}`;
+        const apiUrl = `http://localhost:9090/api/v1/currency?date=${date}&currency=${currency}&exchangeCurrency=${exchangeCurrency}&value=${value}`;
 
         fetch(apiUrl, {
             method: 'POST',

@@ -21,16 +21,11 @@ public class CurrencyEntity {
     @Column(name = "currency_code")
     private String code;
 
-    @Column(name = "exchange_date")
-    LocalDate date;
-
     @Column(name = "currency_name")
     private String name;
 
     @Column(name = "rate")
     private double rate;
 
-    @OneToMany(mappedBy = "sourceCurrency", cascade = CascadeType.ALL)
-    private Set<ExchangeRateEntity> exchangeRates;
 }
 

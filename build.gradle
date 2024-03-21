@@ -27,6 +27,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '4.0.1'
+
+    implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '4.0.4'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
